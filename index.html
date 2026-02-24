@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Для моей любимой Елизаветы</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Cormorant Garamond', serif;
+        }
+        .handwritten {
+            font-family: 'Caveat', cursive;
+        }
+        
+        @keyframes floatUp {
+            0% { 
+                transform: translateY(100vh) rotate(0deg) scale(0.5); 
+                opacity: 0; 
+            }
+            10% { 
+                opacity: 0.8; 
+            }
+            90% { 
+                opacity: 0.8; 
+            }
+            100% { 
+                transform: translateY(-10vh) rotate(360deg) scale(1.2); 
+                opacity: 0; 
+            }
+        }
+        
+        @keyframes gentleFloat {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-15px) scale(1.05); }
+        }
+        
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0; 
+                transform: translateY(30px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% { filter: drop-shadow(0 0 20px rgba(225, 29, 72, 0.4)); }
+            50% { filter: drop-shadow(0 0 40px rgba(225, 29, 72, 0.8)); }
+        }
+        
+        .floating-heart {
+            position: absolute;
+            animation: floatUp linear infinite;
+            pointer-events: none;
+        }
+        
+        .heart-beat {
+            animation: gentleFloat 3s ease-in-out infinite, pulse-glow 2s ease-in-out infinite;
+        }
+        
+        .fade-in-up {
+            animation: fadeInUp 1.5s ease-out forwards;
+        }
+        
+        .delay-300 { animation-delay: 0.3s; }
+        .delay-600 { animation-delay: 0.6s; }
+        
+        .heart-container {
+            cursor: pointer;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .heart-container:hover {
+            transform: scale(1.15);
+        }
+        
+        .heart-container:active {
+            transform: scale(0.95);
+        }
+        
+        .hidden-message {
+            opacity: 0;
+            transform: scale(0.8) translateY(20px);
+            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .hidden-message.show {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-white min-h-screen overflow-hidden relative selection:bg-pink-200 selection:text-pink-900">
+    <!-- Container for floating background hearts -->
+    <div id="hearts-container" class="absolute inset-0 pointer-events-none overflow-hidden z-0"></div>
+
+    <!-- Main Content -->
+    <div class="relative z-10 min-h-screen flex flex-col items-center justify-center px-4 py-12">
+        <div class="text-center max-w-4xl mx-auto">
+            <!-- Main Title -->
+            <div class="fade-in-up opacity-0 mb-16">
+                <h1 class="text-4xl md:text-6xl lg:text-7xl text-gray-800 font-semibold tracking-wide leading-tight">
+                    для моей любимой<br>
+                    <span class="text-rose-600 handwritten text-5xl md:text-7xl lg:text-8xl font-bold mt-4 inline-block transform -rotate-2">
+                        Елизаветы
+                    </span>
+                </h1>
+            </div>
+
+            <!-- Interactive Heart -->
+            <div class="fade-in-up opacity-0 delay-300 flex justify-center mb-12">
+                <div class="heart-container relative heart-beat" onclick="revealSecret()">
+                    <svg class="w-40 h-40 md:w-56 md:h-56 drop-shadow-2xl" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="heartGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#fb7185;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#e11d48;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" 
+                              fill="url(#heartGradient)" 
+                              stroke="#be123c" 
+                              stroke-width="0.5"/>
+                    </svg>
+                    
+                    <!-- Text on heart -->
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <span class="text-white handwritten font-bold text-xl md:text-2xl text-center leading-none select-none transform translate-y-1 drop-shadow-md">
+                            нажми<br>сюда
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hidden Love Message -->
+            <div id="love-message" class="hidden-message mt-8 p-8 bg-gradient-to-br from-pink-50 to-rose-50 rounded-3xl shadow-xl border border-pink-100 max-w-2xl mx-auto">
+                <p class="text-3xl md:text-5xl text-rose-600 handwritten font-bold leading-tight">
+                    Ты делаешь мой мир<br>прекраснее каждый день!
+                </p>
+                <div class="mt-6 text-6xl animate-bounce">❤️</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Create floating hearts on load
+        function initFloatingHearts() {
+            const container = document.getElementById('hearts-container');
+            const heartSymbols = ['❤️', '💖', '💕', '💗', '💓'];
+            const colors = ['#fecdd3', '#fda4af', '#fb7185', '#f43f5e', '#e11d48', '#be123c'];
+            
+            // Create initial batch
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    createHeart(container, heartSymbols, colors);
+                }, i * 250);
+            }
+            
+            // Continue creating hearts periodically
+            setInterval(() => {
+                if (document.hidden) return; // Pause when tab not visible
+                createHeart(container, heartSymbols, colors);
+            }, 800);
+        }
+        
+        function createHeart(container, symbols, colors) {
+            const heart = document.createElement('div');
+            heart.className = 'floating-heart text-2xl md:text-4xl';
+            heart.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.color = colors[Math.floor(Math.random() * colors.length)];
+            heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            heart.style.fontSize = (Math.random() * 30 + 20) + 'px';
+            heart.style.opacity = Math.random() * 0.5 + 0.3;
+            
+            container.appendChild(heart);
+            
+            // Cleanup
+            setTimeout(() => {
+                if (heart.parentNode) heart.parentNode.removeChild(heart);
+            }, 10000);
+        }
+        
+        // Handle heart click
+        function revealSecret() {
+            const message = document.getElementById('love-message');
+            
+            if (!message.classList.contains('show')) {
+                message.classList.remove('hidden-message');
+                message.classList.add('show');
+                
+                // Create explosion effect
+                createHeartExplosion();
+                
+                // Add more intensive floating hearts temporarily
+                const container = document.getElementById('hearts-container');
+                for (let i = 0; i < 10; i++) {
+                    setTimeout(() => createHeart(container, ['❤️', '💖', '💕'], ['#e11d48', '#f43f5e', '#fb7185']), i * 100);
+                }
+            }
+        }
+        
+        // Heart explosion effect
+        function createHeartExplosion() {
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
+            const symbols = ['❤️', '💖', '💕', '💗', '💓', '💝'];
+            
+            for (let i = 0; i < 40; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
+                    heart.style.position = 'fixed';
+                    heart.style.left = centerX + 'px';
+                    heart.style.top = centerY + 'px';
+                    heart.style.fontSize = (Math.random() * 25 + 15) + 'px';
+                    heart.style.pointerEvents = 'none';
+                    heart.style.zIndex = '100';
+                    heart.style.transition = 'all 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                    heart.style.textShadow = '0 0 10px rgba(225, 29, 72, 0.5)';
+                    document.body.appendChild(heart);
+                    
+                    const angle = (Math.PI * 2 * i) / 40 + (Math.random() * 0.5);
+                    const distance = 150 + Math.random() * 250;
+                    const x = Math.cos(angle) * distance;
+                    const y = Math.sin(angle) * distance;
+                    const rotation = Math.random() * 360;
+                    
+                    setTimeout(() => {
+                        heart.style.transform = `translate(${x}px, ${y}px) rotate(${rotation}deg) scale(0)`;
+                        heart.style.opacity = '0';
+                    }, 10);
+                    
+                    setTimeout(() => heart.remove(), 1500);
+                }, i * 30);
+            }
+        }
+        
+        // Initialize when page loads
+        window.addEventListener('load', initFloatingHearts);
+        
+        // Handle resize
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                // Clear existing hearts on resize to prevent layout issues
+                const container = document.getElementById('hearts-container');
+                container.innerHTML = '';
+            }, 250);
+        });
+    </script>
+<script src="https://deepsite.hf.co/deepsite-badge.js"></script>
+</body>
+</html>
